@@ -10,7 +10,7 @@ This repo serves as a playground for all my experimentation with different techn
     - [nlp_tfidf_lda.ipynb](NLP/Notebooks/nlp_tfidf_lda.ipynb)
 2.  **Kaggle** - contains everything used for Kaggle Competitions
   -  Titanic - competition to classify whether a passenger would survive the disaster
-        - [Titanic-EDA.ipynb](Kaggle/Notebooks/Titanic-EDA.ipynb)
+        - [Titanic-EDA.ipynb](Kaggle/Titanic/Notebooks/Titanic-EDA.ipynb)
 
 ### Notebooks:
 
