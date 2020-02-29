@@ -9,7 +9,6 @@ This repo serves as a playground for all my experimentation with different techn
   - Datasets
   - Notebooks
     - [nlp_tfidf_lda.ipynb](NLP/Notebooks/nlp_tfidf_lda.ipynb)
-    - [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/CoderHahs/ml-training/master?filepath=NLP%2FNotebooks%2Fnlp_tfidf_lda.ipynb)
 2.  **Kaggle** - contains everything used for Kaggle Competitions
   -  Titanic - competition to classify whether a passenger would survive the disaster
         - [Titanic-EDA.ipynb](Kaggle/Titanic/Notebooks/Titanic-EDA.ipynb)
