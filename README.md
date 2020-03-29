@@ -13,7 +13,7 @@ This repo serves as a playground for all my experimentation with different techn
   - Titanic - competition to classify whether a passenger would survive the disaster
         - [Titanic-EDA.ipynb](Kaggle/Titanic/Notebooks/Titanic-EDA.ipynb)
 3. **Projects** - contains all Data Science Projects
-  - COVID-19 Dashboard - a dashboard created to monitor the Coronavirus Pandemic. Created using Plotly, Dash, and Heroku. View the dashboard at [covid19-report.herokuapp.com](covid19-report.herokuapp.com)
+  - COVID-19 Dashboard - a dashboard created to monitor the Coronavirus Pandemic. Created using Plotly, Dash, and Heroku. View the dashboard at [covid19-report.herokuapp.com](https://covid19-report.herokuapp.com)
     - [covid-app](Projects/covid-app)
 
 ### Notebooks:
