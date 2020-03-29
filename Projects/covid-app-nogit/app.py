@@ -2,6 +2,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
+import dash_table
 import pandas as pd
 import requests
 
@@ -17,8 +18,13 @@ server = app.server
 r = requests.get("https://api.covid19api.com/all")
 data = r.json()
 
+r = requests.get("https://api.covid19api.com/summary")
+summary_data = r.json()
+
 # create dataframe
 df = pd.DataFrame(data)
+summary_df = pd.DataFrame(summary_data['Countries'])
+summary_df = summary_df.sort_values(by=['TotalConfirmed'], ascending=False).drop(columns=['Slug'])
 
 if isinstance(df, (pd.DatetimeIndex, pd.MultiIndex)):
 	df = df.to_frame(index=False)
@@ -113,7 +119,16 @@ app.layout = html.Div(children=[
             }
         )],
         style={'display': 'inline-block', 'width': '33%'}
-    )
+    ),
+	html.Div([
+		dash_table.DataTable(
+		    id='table',
+		    columns=[{"name": i, "id": i} for i in summary_df.columns],
+		    data=summary_df.to_dict('records'),
+			style_cell={'padding': '5px', 'textAlign': 'left'},
+		)],
+		style={'width': '50%', 'padding-left': '16.5%', 'padding-right': '18.5%'}
+	)
 ])
 
 @app.callback(
