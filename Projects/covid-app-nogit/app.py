@@ -32,22 +32,20 @@ if isinstance(df, (pd.DatetimeIndex, pd.MultiIndex)):
 # remove any pre-existing indices for ease of use in the D-Tale code, but this is not required
 df = df.reset_index().drop('index', axis=1, errors='ignore')
 df.columns = [str(c) for c in df.columns]  # update columns to strings in case they are numbers
-
 chart_data = pd.concat([
 	df['Date'],
-	df['Cases'],
+	df['Confirmed'],
+	df['Deaths'],
+	df['Recovered'],
+	df['Active'],
 	df['Country'],
-	df['Status'],
 ], axis=1)
-chart_data = chart_data.sort_values(['Country', 'Status', 'Date'])
-chart_data = chart_data.groupby(['Country', 'Status', 'Date']).sum().reset_index()
+chart_data = chart_data.sort_values(['Country', 'Date'])
+chart_data = chart_data.groupby(['Country', 'Date']).sum().reset_index()
 chart_data = chart_data.dropna()
-worldwide_grouped = chart_data.groupby(['Status', 'Date']).sum().reset_index()
+worldwide_grouped = chart_data.groupby(['Date']).sum().reset_index()
 worldwide_grouped['Country'] = 'Worldwide'
 chart_data = pd.concat([chart_data, worldwide_grouped], ignore_index=True)
-confirmed_cases = worldwide_grouped[worldwide_grouped['Status'] == 'confirmed']
-death_cases = worldwide_grouped[worldwide_grouped['Status'] == 'deaths']
-recovered_cases = worldwide_grouped[worldwide_grouped['Status'] == 'recovered']
 countries = chart_data['Country'].unique()
 
 app.layout = html.Div(children=[
@@ -77,7 +75,7 @@ app.layout = html.Div(children=[
             id='confirmed-graph',
             figure={
                 'data': [
-                    {'x': confirmed_cases['Date'], 'y': confirmed_cases['Cases'], 'type': 'line'},
+                    {'x': worldwide_grouped['Date'], 'y': worldwide_grouped['Confirmed'], 'type': 'line'},
                 ],
                 'layout': dict(
                     title='Confirmed Cases - Worldwide',
@@ -93,7 +91,7 @@ app.layout = html.Div(children=[
             id='deaths-graph',
             figure={
                 'data': [
-                    {'x': death_cases['Date'], 'y': death_cases['Cases'], 'type': 'line'},
+                    {'x': worldwide_grouped['Date'], 'y': worldwide_grouped['Deaths'], 'type': 'line'},
                 ],
                 'layout': dict(
                     title='Number of Deaths - Worldwide',
@@ -109,7 +107,7 @@ app.layout = html.Div(children=[
             id='recovered-graph',
             figure={
                 'data': [
-                    {'x': recovered_cases['Date'], 'y': recovered_cases['Cases'], 'type': 'line'},
+                    {'x': worldwide_grouped['Date'], 'y': worldwide_grouped['Recovered'], 'type': 'line'},
                 ],
                 'layout': dict(
                     title='Recovered Cases - Worldwide',
@@ -123,11 +121,11 @@ app.layout = html.Div(children=[
 	html.Div([
 		dash_table.DataTable(
 		    id='table',
-		    columns=[{"name": i, "id": i} for i in summary_df.columns],
-		    data=summary_df.to_dict('records'),
+		    columns=[{"name": i, "id": i} for i in summary_df[['Country', 'NewConfirmed', 'TotalConfirmed', 'NewDeaths', 'TotalDeaths', 'NewRecovered', 'TotalRecovered']].columns],
+		    data=summary_df[['Country', 'NewConfirmed', 'TotalConfirmed', 'NewDeaths', 'TotalDeaths', 'NewRecovered', 'TotalRecovered']].to_dict('records'),
 			style_cell={'padding': '5px', 'textAlign': 'left'},
 		)],
-		style={'width': '50%', 'padding-left': '16.5%', 'padding-right': '18.5%'}
+		style={'width': '50%', 'padding-left': '10%', 'padding-right': '10%'}
 	)
 ])
 
@@ -138,7 +136,7 @@ def update_confirmed_graph (country_selected):
     dff = chart_data[chart_data['Country'] == country_selected]
     return {
         'data': [
-            {'x': dff[dff['Status'] == 'confirmed']['Date'], 'y': dff[dff['Status'] == 'confirmed']['Cases'], 'type': 'line'},
+            {'x': dff['Date'], 'y': dff['Confirmed'], 'type': 'line'},
         ],
         'layout': dict(
             title='Confirmed Cases - '+ country_selected,
@@ -154,7 +152,7 @@ def update_confirmed_graph (country_selected):
     dff = chart_data[chart_data['Country'] == country_selected]
     return {
         'data': [
-            {'x': dff[dff['Status'] == 'deaths']['Date'], 'y': dff[dff['Status'] == 'deaths']['Cases'], 'type': 'line'},
+            {'x': dff['Date'], 'y': dff['Deaths'], 'type': 'line'},
         ],
         'layout': dict(
             title='Number of Deaths - '+ country_selected,
@@ -170,7 +168,7 @@ def update_confirmed_graph (country_selected):
     dff = chart_data[chart_data['Country'] == country_selected]
     return {
         'data': [
-            {'x': dff[dff['Status'] == 'recovered']['Date'], 'y': dff[dff['Status'] == 'recovered']['Cases'], 'type': 'line'},
+            {'x': dff['Date'], 'y': dff['Recovered'], 'type': 'line'},
         ],
         'layout': dict(
             title='Recovered Cases - '+ country_selected,
