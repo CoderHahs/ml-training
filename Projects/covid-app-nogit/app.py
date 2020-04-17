@@ -3,8 +3,10 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
 import dash_table
+import plotly.graph_objects as go
 import pandas as pd
 import requests
+import numpy as np
 
 # initialize app
 # external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -47,6 +49,14 @@ worldwide_grouped = chart_data.groupby(['Date']).sum().reset_index()
 worldwide_grouped['Country'] = 'Worldwide'
 chart_data = pd.concat([chart_data, worldwide_grouped], ignore_index=True)
 countries = chart_data['Country'].unique()
+summary_table = go.Figure(data=[go.Table(
+    header=dict(values=['Country', 'NewConfirmed', 'TotalConfirmed', 'NewDeaths', 'TotalDeaths', 'NewRecovered', 'TotalRecovered'],
+                align='left'),
+    cells=dict(values=[summary_df.Country, summary_df.NewConfirmed, summary_df.TotalConfirmed,
+			   summary_df.NewDeaths, summary_df.TotalDeaths, summary_df.NewRecovered, summary_df.TotalRecovered],
+               align='left'))
+])
+
 
 app.layout = html.Div(children=[
     html.H1(
@@ -70,6 +80,22 @@ app.layout = html.Div(children=[
                 value='Worldwide'
             )
     ]),
+	html.Div([
+        dcc.Graph(
+            id='log-graph',
+            figure={
+                'data': [
+                    {'x': worldwide_grouped['Date'], 'y': np.log(worldwide_grouped['Confirmed']- worldwide_grouped['Deaths']-worldwide_grouped['Recovered']), 'type': 'line'},
+                ],
+                'layout': dict(
+                    title='Log of Active Cases - Worldwide',
+                    xaxis={'title': 'Date'},
+                    yaxis={'title': 'Rate of people being affected'},
+                )
+            }
+        )],
+		style={'maxWidth': '50%', "display": "block","margin-left": "auto","margin-right": "auto"}
+    ),
     html.Div([
         dcc.Graph(
             id='confirmed-graph',
@@ -119,13 +145,9 @@ app.layout = html.Div(children=[
         style={'display': 'inline-block', 'width': '33%'}
     ),
 	html.Div([
-		dash_table.DataTable(
-		    id='table',
-		    columns=[{"name": i, "id": i} for i in summary_df[['Country', 'NewConfirmed', 'TotalConfirmed', 'NewDeaths', 'TotalDeaths', 'NewRecovered', 'TotalRecovered']].columns],
-		    data=summary_df[['Country', 'NewConfirmed', 'TotalConfirmed', 'NewDeaths', 'TotalDeaths', 'NewRecovered', 'TotalRecovered']].to_dict('records'),
-			style_cell={'padding': '5px', 'textAlign': 'left'},
-		)],
-		style={'width': '50%', 'padding-left': '10%', 'padding-right': '10%'}
+		dcc.Graph(figure=summary_table)
+		],
+		style={"display": "block","margin-left": "auto","margin-right": "auto"}
 	)
 ])
 
@@ -175,7 +197,22 @@ def update_confirmed_graph (country_selected):
             xaxis={'title': 'Date'},
             yaxis={'title': 'Number of people affected'},
         )
-            # 'title': 'Recovered Cases - ' + country_selected
+    }
+
+@app.callback(
+    Output('log-graph', 'figure'),
+    [Input('country-selector', 'value')])
+def update_confirmed_graph (country_selected):
+    dff = chart_data[chart_data['Country'] == country_selected]
+    return {
+        'data': [
+            {'x': dff['Date'], 'y': np.log(dff['Confirmed']-dff['Deaths']-dff['Recovered']), 'type': 'line'},
+        ],
+        'layout': dict(
+            title='Log of Active Cases - '+country_selected,
+			xaxis={'title': 'Date'},
+			yaxis={'title': 'Rate of people being affected'},
+        )
     }
 
 if __name__ == '__main__':
