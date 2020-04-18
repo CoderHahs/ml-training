@@ -7,6 +7,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import requests
 import numpy as np
+from flask import request
 
 # initialize app
 # external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -15,6 +16,8 @@ app = dash.Dash(__name__)
 app.title = 'COVID-19 Report'
 
 server = app.server
+
+first_time = True
 
 # summary data
 r = requests.get("https://api.covid19api.com/summary")
@@ -34,12 +37,13 @@ r = requests.get("https://api.covid19api.com/countries")
 countries = pd.DataFrame(r.json()).sort_values(by='Country')
 
 # initial chart pulling
-r = requests.get('http://ipinfo.io/json')
-iso = r.json()['country']
+# r = requests.get('http://ipinfo.io/json')
+iso = 'CA'
 slug = countries[countries['ISO2'] == iso]['Slug'].values[0]
 ip_country = countries[countries['ISO2'] == iso]['Country'].values[0]
 r = requests.get('https://api.covid19api.com/country/'+slug)
 initial_data = pd.DataFrame(r.json())[['Date', 'Confirmed', 'Deaths', 'Recovered']].groupby('Date').sum().reset_index()
+initial_data
 
 # world totals
 r = requests.get("https://api.covid19api.com/world/total")
@@ -165,10 +169,10 @@ app.layout = html.Div(children=[
     Output('confirmed-graph', 'figure'),
     [Input('country-selector', 'value')])
 def update_confirmed_graph (country_selected):
-	slug = countries[countries['Country'] == country_selected]['Slug'].values[0]
-	r = requests.get('https://api.covid19api.com/total/country/'+slug)
-	dff = pd.DataFrame(r.json())[['Date', 'Confirmed', 'Deaths', 'Recovered']].groupby('Date').sum().reset_index()
-	return {
+    slug = countries[countries['Country'] == country_selected]['Slug'].values[0]
+    r = requests.get('https://api.covid19api.com/total/country/'+slug)
+    dff = pd.DataFrame(r.json())[['Date', 'Confirmed', 'Deaths', 'Recovered']].groupby('Date').sum().reset_index()
+    return {
         'data': [
             {'x': dff['Date'], 'y': dff['Confirmed'], 'type': 'line'},
         ],
@@ -248,7 +252,7 @@ def update_active_graph (country_selected):
         'layout': dict(
             title='Active Cases - '+country_selected,
 			xaxis={'title': 'Date'},
-			yaxis={'title': 'Rate of people still infected'},
+			yaxis={'title': 'Number of people still infected'},
         )
     }
 
