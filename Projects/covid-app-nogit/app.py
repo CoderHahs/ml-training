@@ -25,7 +25,7 @@ summary_data = r.json()
 summary_df = pd.DataFrame(summary_data['Countries'])
 summary_df = summary_df.sort_values(by=['TotalConfirmed'], ascending=False).drop(columns=['Slug'])
 summary_table = go.Figure(data=[go.Table(
-    header=dict(values=['Country', 'NewConfirmed', 'TotalConfirmed', 'NewDeaths', 'TotalDeaths', 'NewRecovered', 'TotalRecovered'],
+    header=dict(values=['Country', 'New Confirmed', 'Total Confirmed', 'New Deaths', 'Total Deaths', 'New Recovered', 'Total Recovered'],
                 align='left'),
     cells=dict(values=[summary_df.Country, summary_df.NewConfirmed, summary_df.TotalConfirmed,
 			   summary_df.NewDeaths, summary_df.TotalDeaths, summary_df.NewRecovered, summary_df.TotalRecovered],
