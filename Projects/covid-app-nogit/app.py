@@ -48,6 +48,7 @@ initial_data
 # world totals
 r = requests.get("https://api.covid19api.com/world/total")
 world_data = r.json()
+world_data
 
 app.layout = html.Div(children=[
     html.H1(
@@ -57,7 +58,8 @@ app.layout = html.Div(children=[
 
     html.Div(
     children='''A graphical report made to help understand the pandemic.
-    Brought to you by Hrithik Shah.''',
+    Brought to you by Hrithik Shah.
+    If the graphs aren't displaying data then there might be an issue with the external API. Please come back later.''',
     style={
             'textAlign': 'center',
         }
@@ -170,25 +172,25 @@ app.layout = html.Div(children=[
     [Input('country-selector', 'value')])
 def update_confirmed_graph (country_selected):
     slug = countries[countries['Country'] == country_selected]['Slug'].values[0]
-    r = requests.get('https://api.covid19api.com/total/country/'+slug)
+    r = requests.get('https://api.covid19api.com/country/'+slug)
     dff = pd.DataFrame(r.json())[['Date', 'Confirmed', 'Deaths', 'Recovered']].groupby('Date').sum().reset_index()
     return {
-        'data': [
-            {'x': dff['Date'], 'y': dff['Confirmed'], 'type': 'line'},
-        ],
-        'layout': dict(
-            title='Confirmed Cases - '+ country_selected,
-            xaxis={'title': 'Date'},
-            yaxis={'title': 'Number of total infections'},
-        )
-    }
+    'data': [
+        {'x': dff['Date'], 'y': dff['Confirmed'], 'type': 'line'},
+    ],
+    'layout': dict(
+        title='Confirmed Cases - '+ country_selected,
+        xaxis={'title': 'Date'},
+        yaxis={'title': 'Number of total infections'},
+    )
+}
 
 @app.callback(
     Output('deaths-graph', 'figure'),
     [Input('country-selector', 'value')])
 def update_deaths_graph (country_selected):
 	slug = countries[countries['Country'] == country_selected]['Slug'].values[0]
-	r = requests.get('https://api.covid19api.com/total/country/'+slug)
+	r = requests.get('https://api.covid19api.com/country/'+slug)
 	dff = pd.DataFrame(r.json())[['Date', 'Deaths']].groupby('Date').sum().reset_index()
 	return {
         'data': [
@@ -206,7 +208,7 @@ def update_deaths_graph (country_selected):
     [Input('country-selector', 'value')])
 def update_recovered_graph (country_selected):
 	slug = countries[countries['Country'] == country_selected]['Slug'].values[0]
-	r = requests.get('https://api.covid19api.com/total/country/'+slug)
+	r = requests.get('https://api.covid19api.com/country/'+slug)
 	dff = pd.DataFrame(r.json())[['Date', 'Recovered']].groupby('Date').sum().reset_index()
 
 	return {
@@ -225,7 +227,7 @@ def update_recovered_graph (country_selected):
     [Input('country-selector', 'value')])
 def update_log_graph (country_selected):
 	slug = countries[countries['Country'] == country_selected]['Slug'].values[0]
-	r = requests.get('https://api.covid19api.com/total/country/'+slug)
+	r = requests.get('https://api.covid19api.com/country/'+slug)
 	dff = pd.DataFrame(r.json())[['Date', 'Confirmed', 'Deaths', 'Recovered']].groupby('Date').sum().reset_index()
 	return {
         'data': [
@@ -243,7 +245,7 @@ def update_log_graph (country_selected):
     [Input('country-selector', 'value')])
 def update_active_graph (country_selected):
 	slug = countries[countries['Country'] == country_selected]['Slug'].values[0]
-	r = requests.get('https://api.covid19api.com/total/country/'+slug)
+	r = requests.get('https://api.covid19api.com/country/'+slug)
 	dff = pd.DataFrame(r.json())[['Date', 'Confirmed', 'Deaths', 'Recovered']].groupby('Date').sum().reset_index()
 	return {
         'data': [
