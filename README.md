@@ -12,8 +12,8 @@ This repo serves as a playground for all my experimentation with different techn
       - [nlp_tfidf_lda.ipynb](Knowledge/NLP/Notebooks/nlp_tfidf_lda.ipynb)
   - **AI** - contains all notebooks related to Artificial Intelligence
     - Notebooks
-      - [fuzzy_logic.ipynb](Knowledge/NLP/Notebooks/nlp_tfidf_lda.ipynb)
-      - [graph_search.ipynb](Knowledge/NLP/Notebooks/nlp_tfidf_lda.ipynb)
+      - [fuzzy_logic.ipynb](Knowledge/AI/Fuzzy%20Logic/fuzzy_logic.ipynb)
+      - [graph_search.ipynb](Knowledge/AI/Graph%20Search/graph_search.ipynb)
 2.  **Kaggle** - contains everything used for Kaggle Competitions
   - Titanic - competition to classify whether a passenger would survive the disaster. Overall accuracy of 75%.
       - [Titanic-EDA.ipynb](Kaggle/Titanic/Notebooks/Titanic-EDA.ipynb)
