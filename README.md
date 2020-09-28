@@ -5,27 +5,18 @@ This repo serves as a playground for all my experimentation with different techn
 
 ## Structure
 
-1. **NLP** - contains all notebooks & datasets related to Natural Language Processing
-  - Datasets
-  - Notebooks
-    - [nlp_tfidf_lda.ipynb](Knowledge/NLP/Notebooks/nlp_tfidf_lda.ipynb)
+1. **Knowledge**
+  - **NLP** - contains all notebooks & datasets related to Natural Language Processing
+    - Datasets
+    - Notebooks
+      - [nlp_tfidf_lda.ipynb](Knowledge/NLP/Notebooks/nlp_tfidf_lda.ipynb)
+  - **AI** - contains all notebooks related to Artificial Intelligence
+    - Notebooks
+      - [fuzzy_logic.ipynb](Knowledge/NLP/Notebooks/nlp_tfidf_lda.ipynb)
+      - [graph_search.ipynb](Knowledge/NLP/Notebooks/nlp_tfidf_lda.ipynb)
 2.  **Kaggle** - contains everything used for Kaggle Competitions
-  - Titanic - competition to classify whether a passenger would survive the disaster
-        - [Titanic-EDA.ipynb](Kaggle/Titanic/Notebooks/Titanic-EDA.ipynb)
+  - Titanic - competition to classify whether a passenger would survive the disaster. Overall accuracy of 75%.
+      - [Titanic-EDA.ipynb](Kaggle/Titanic/Notebooks/Titanic-EDA.ipynb)
 3. **Projects** - contains all Data Science Projects
   - COVID-19 Dashboard - a dashboard created to monitor the Coronavirus Pandemic. Created using Plotly, Dash, and Heroku. View the dashboard at [covid19-report.herokuapp.com](https://covid19-report.herokuapp.com)
     - [covid-app](Projects/covid-app-nogit)
-
-### Notebooks:
-
-#### NLP, TF-IDF and LDA
-
-A notebook that implements topical modeling using LDA and two different measures of the importance of a word, Bag of Words and TF-IDF.
-
-Find the notebook here: [nlp_tfidf_lda.ipynb](Knowledge/NLP/Notebooks/nlp_tfidf_lda.ipynb)
-
-#### Kaggle - Titanic Survivability Prediction
-
-A notebook that goes over the Titanic Kaggle competition, and how I attempted to solve this problem. Overall accuracy of 75%
-
-Find the notebook here: [Titanic-EDA.ipynb](Kaggle/Titanic/Notebooks/Titanic-EDA.ipynb)
