@@ -14,6 +14,15 @@ This repo serves as a playground for all my experimentation with different techn
     - Notebooks
       - [fuzzy_logic.ipynb](Knowledge/AI/Fuzzy%20Logic/fuzzy_logic.ipynb)
       - [graph_search.ipynb](Knowledge/AI/Graph%20Search/graph_search.ipynb)
+      - [simanneal.ipynb](Knowledge/AI/Simulated%20Annealing/simanneal.ipynb)
+      - [sml_titanic.ipynb](Knowledge/AI/SML-Titanic/sml_titanic.ipynb)
+      - [supervised_learning.ipynb](Knowledge/AI/Supervised%20Learning/supervised_learning.ipynb)
+      - [nlp.ipynb](Knowledge/AI/Natural%20Language%20Processing/nlp.ipynb)
+      - [knowledge_representation.ipynb](Knowledge/AI/Knowledge%20Representation/knowledge_representation.ipynb)
+      - [mlp.ipynb](Knowledge/AI/Multi-Layer%20Perceptron/mlp.ipynb)
+      - [gan.ipynb](Knowledge/AI/GAN/gan.ipynb)
+      - [rl.ipynb](Knowledge/AI/Reinforcement%20Learning/rl.ipynb)
+
 2.  **Kaggle** - contains everything used for Kaggle Competitions
   - Titanic - competition to classify whether a passenger would survive the disaster. Overall accuracy of 75%.
       - [Titanic-EDA.ipynb](Kaggle/Titanic/Notebooks/Titanic-EDA.ipynb)
