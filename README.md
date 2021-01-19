@@ -1,6 +1,6 @@
 # Machine Learning Repository
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/CoderHahs/ml-training/master)
+Interact with this project here: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/CoderHahs/ml-training/master)
 
 This repo serves as a playground for all my experimentation with different techniques used in ML. Since I'm quite new to Data Science and have recently gotten work experience with Analytics and the basics of ML, I want to explore the field further.
 
