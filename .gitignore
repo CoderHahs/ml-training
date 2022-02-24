@@ -6,3 +6,5 @@ Kaggle/CORD-19 Research Challenge/.ipynb_checkpoints/CORD-19 EDA-checkpoint.ipyn
 Projects/.ipynb_checkpoints/COVID-19_EDA-checkpoint.ipynb
 Projects/covid-app/
 Knowledge/AI/
+*.data
+SemEval-PIT2015-master/
