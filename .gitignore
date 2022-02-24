@@ -7,4 +7,6 @@ Projects/.ipynb_checkpoints/COVID-19_EDA-checkpoint.ipynb
 Projects/covid-app/
 Knowledge/AI/
 *.data
-SemEval-PIT2015-master/
+Projects/paraphrase_classifier/SemEval-PIT2015-master/data
+Projects/paraphrase_classifier/SemEval-PIT2015-master/scripts
+Projects/paraphrase_classifier/SemEval-PIT2015-master/systemoutputs
