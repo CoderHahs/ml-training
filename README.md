@@ -12,7 +12,7 @@ This repo serves as a playground for all my experimentation with different techn
     -   Datasets
     -   Notebooks
         -   [nlp_tfidf_lda.ipynb](Knowledge/NLP/Notebooks/nlp_tfidf_lda.ipynb)
-        -   [Paraphrase Classifier](Projects/paraphrase_classifier/Building-a-Paraphrase-Classifier.ipynb) - a simple investigation on creating a paraphrase classifier
+        -   [Paraphrase Classifier](Knowledge/NLP/Notebooks/paraphrase_classifier/Building-a-Paraphrase-Classifier.ipynb) - a simple investigation on creating a paraphrase classifier
 -   **AI** - contains all content related to Artificial Intelligence
     -   Notes can be viewed at [Hrithik's Notes](https://hrithiks-notes.netlify.app/ai)
 
