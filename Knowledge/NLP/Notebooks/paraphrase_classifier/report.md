@@ -1,6 +1,10 @@
 # Introduction
 
-Describe the problem of binary classification of paraphrases
+Binary classification of paraphrases is an important topic being researched in the Nature Language Processing space. As humans it is easy to determine if two sentences hold the same meaning, however teaching a machine to the same is a great challenge.
+
+This topic is crucial especially in the application of virtual assistants. Virtual assistants deal with questions and instructions posed to it multiple times a day, all over the world. Understanding the meaning behind these prompts will help virtual assistants relay information better.
+
+This report summarizes an investigation into the creation of a rudimentary paraphrase classifier. Two main methods were employed; a rule-based baseline approach, and a KNN classifier accompanied by Bag of Words. Each methodology was described and explained and the results were discussed. Future improvements were also stated.
 
 # Dataset
 
@@ -11,10 +15,6 @@ The dataset that was used was _Paraphrase and Semantic Similarity in Twitter_. T
 The dataset has multiple examples of two sentence inputs. A panel of five judges examined these two inputs and determined if they are paraphrases of each other or not. The decision of the judges was also provided in terms of votes. For example if three judges voted saying the two inputs are paraphrases and the other two did not, then the provided decision was `(3,2)`.
 
 The entire dataset was used for the assignment. The dataset curator did suggest that inputs that have a "debatable" decision like `(3,2)` or `(2,3)` can be removed from any training and testing so that there is no uncertainty present in the training data. However, I chose to keep it in so that there would be more data to train on.
-
--   Give your method for changing from graded evaluations to binary (you don’t
-    have to follow what is mentioned on the github page, you can decide what
-    you want)
 
 # Converting Votes to a Binary Class
 
@@ -147,13 +147,29 @@ that the best method got right or wrong)
 
 As expected, the baseline algorithm performed similarly on the Test Set as it did on the Dev Set. In fact, it performed a bit better but this is a coincidence as this is just a rule-based algorithm.
 
+Here is an analysis of some examples of test cases for the baseline approach:
+
+|     |                           Sentence 1 |                                                   Sentence 2 | Prediction | Actual | Analysis                                                                                                                                                                                                                                                                                                                                             |
+| --: | -----------------------------------: | -----------------------------------------------------------: | ---------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|   1 | The last rap battle in 8 mile though | But why were people watching the heat play when 8 mile is on | NP         | NP     | This is an example where the sentences are clearly different, and the only common words in the sentences are "8 mile"                                                                                                                                                                                                                                |
+|   2 |           Well at least 8 Mile is on |                             My favorite movie ever is 8 mile | NP         | P      | This an example where the sentences are different (non-paraphrases). The prediction is also indicative of this, however the correct result in this case should be paraphrase. In my opinion these sentences are non-paraphrases, however the judges felt they were paraphrases. This was most likely an instance where the sentences were debatable. |
+|   3 |      Ok good the end of 8 Mile is on |                          The end of 8 Mile makes me so happy | P          | P      | This example makes sense, both sentences are paraphrases. However, the baseline algorithm worked here because there are few words in the sentences. If there were more words then it would not work.                                                                                                                                                 |
+|   4 |           hahaha that sounds like me |                         That sounds totally reasonable to me | P          | NP     | Here we see that due to the low number of words, the baseline got the prediction wrong.                                                                                                                                                                                                                                                              |
+
 # Conclusion
 
-Write a short conclusion about the experiment and future possibilities
+In a high level view, the baseline approach seems to work well on sentences that are a few words in length, since there is a higher chance of passing the 50% common word threshold.
+
+I was also surprised that the KNN classifier did not work that well. One of the reasons which might have contributed to the lack of success could be that there were still too many features, and that might have led to less commonality between neighbors.
+
+For future improvements, using part-of-speech tagging might be a great improvement. Also using unsupervised learning could be an alternative approach.
 
 # References
 
-▪ Provide any reference you use for your programming
-▪ Provide a reference for the dataset
+1. C. (n.d.). GitHub - cocoxu/SemEval-PIT2015: data and scripts for the shared task “Task 1: Paraphrase and Semantic Similarity in Twitter (PIT)” at SemEval 2015. GitHub. Retrieved February 26, 2022, from https://github.com/cocoxu/SemEval-PIT2015
+2. Navlani, A. (2018, August 2). KNN Classification Tutorial using Sklearn Python. DataCamp Community. Retrieved February 26, 2022, from https://www.datacamp.com/community/tutorials/k-nearest-neighbor-classification-scikit-learnShah,
+3. sklearn.neighbors.KNeighborsClassifier. (n.d.). Scikit-Learn. Retrieved February 26, 2022, from https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
 
-https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
+Source code:
+
+1. H. (n.d.). ml-training/Building-a-Paraphrase-Classifier.ipynb at master · CoderHahs/ml-training. GitHub. Retrieved February 26, 2022, from https://github.com/CoderHahs/ml-training/blob/master/Knowledge/NLP/Notebooks/paraphrase_classifier/Building-a-Paraphrase-Classifier.ipynb
