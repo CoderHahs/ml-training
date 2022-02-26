@@ -1,8 +1,8 @@
 # Introduction
 
-# Dataset
+Describe the problem of binary classification of paraphrases
 
--   Describe what part of the dataset you will use
+# Dataset
 
 ## About the Dataset
 
@@ -58,9 +58,6 @@ Here are some examples of paraphrases ("P") and non-paraphrases ("NP"):
 
 To predict if two sentence inputs are paraphrases or not, three different methods were used. The first was designated as the baseline algorithm as it was relatively simple and did not use any classification algorithms. The second and third algorithm are similar in terms of the classification algorithm that was employed, however the features used to train the model were different.
 
--   Describe your baseline algorithm, provide an example to illustrate what it
-    does
-
 ## Baseline Algorithm
 
 The baseline approach is straightforward. Each input sentence is transformed into lowercase form, and then the sentence is split into an array of words. The array is then converted into a set, so duplicate words are removed. Then the number of common words between the two sentences is found. This number if multiplied by two, since it occurs in the first sentence set as well as the second sentence set. It is then divide by the total number of words of the two sentences. When divided, if the output is greater than or equal to 0.5, then the sentences are classified as paraphrases of each other. Otherwise they are classified as non-paraphrases.
@@ -90,11 +87,73 @@ An example of the baseline approach is as follows:
 4. The score is calculated as `2*(number of common words) / total number of words in two sentences = 2*5/13 = 0.77`.
 5. Given the score, the two sentences would be classified as paraphrases as one another.
 
--   Describe your method 1 algorithm, also provide an example
--   Describe your method 2 algorithm, also provide an example
+## Bag of Words and KNN Classifier
+
+Bag of Words is a method that is used on a corpus. It takes into account the frequency of each word occurring in sentence and generates a vector accordingly.
+
+For example if the corpus was "Nice things don't happen in storybooks. Or when they do happen, something bad happens next. Because otherwise the story would be boring, and no one would read it." This blurb was taken from a book by Holly Black.
+
+The vector transformation would look like this:
+
+> [1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2]
+
+Each number represents the frequency of a word like "nice" or "storybooks" occurring in the above corpus.
+
+The K-Nearest Neighbours (KNN) classifier uses the nearest points of data (the neighbours) to classify a new data point. In the figure below, there is a new data point indicated by the "?". Since `K=3`, the classifier uses the three nearest neighbours. For our purposes we used the default value, `5`. From the three nearest neighbours, there are two class B points and one class A point. Here the classifier will classify the new data point as class B.
+
+![Image](https://res.cloudinary.com/dyd911kmh/image/upload/f_auto,q_auto:best/v1531424125/KNN_final1_ibdm8a.png)
+
+The reason the KNN Classifier was used as it is similar the vote based system used to generate the classes for paraphrase and non-paraphrase.
+
+## Bag of Words without Stop Words
+
+The modification to the second algorithm is small but still significant. The same classifier was used, just the features used to train the classifier were slightly different.
+
+In the previous Bag of Words approach, the frequency of every word in the sentence was taken into account. Words like "a", "to", etc, also known as stopwords, would naturally have higher frequencies and this could offset the classification model. To remedy this, the stopwords will need to be removed.
+
+An example of the removal of stopwords for the above corpus is as follows:
+
+> The corpus with no removal words:
+> ['and','bad','be','because','boring','do','don','happen','happens','in','it','next','nice','no','one','or','otherwise','read','something','story','storybooks','the','they','things','when','would']
+>
+> The corpus with stopwords removed:
+> ['bad','boring','don','happen','happens','nice','read','story','storybooks','things']
 
 # Results
 
+## Testing on the Dev Set
+
+The results for the three separate algorithms is shown in the table below. The results are based of testing done on the Dev Set of the dataset. Surprisingly, the baseline algorithm performed better overall.
+
+|                            Algorithm | Precision | Recall | Accuracy |
+| -----------------------------------: | --------: | -----: | -------- |
+|                             Baseline |    0.6976 | 0.2966 | 0.7413   |
+|                   Bag of Words + KNN |    0.3175 | 0.0544 | 0.6696   |
+| Bag of Words without stopwords + KNN |    0.5183 | 0.0769 | 0.6907   |
+
+There was some improvement when stopwords were removed from the Bag of Words vector, especially in regards to recall.
+
+## Testing on the Test Set
+
+Since the best performing algorithm was the baseline algorithm, it was tested on the Test Set of the dataset.
+
+The results are below:
+| Algorithm | Precision | Recall | Accuracy |
+| -----------------------------------: | --------: | -----: | -------- |
+| Baseline | 0.8220 | 0.3139 | 0.7603 |
+
+▪ Discuss the results, including a qualitative analysis (showing a few examples
+that the best method got right or wrong)
+
+As expected, the baseline algorithm performed similarly on the Test Set as it did on the Dev Set. In fact, it performed a bit better but this is a coincidence as this is just a rule-based algorithm.
+
 # Conclusion
 
+Write a short conclusion about the experiment and future possibilities
+
 # References
+
+▪ Provide any reference you use for your programming
+▪ Provide a reference for the dataset
+
+https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html
