@@ -26,3 +26,4 @@ This repo serves as a playground for all my experimentation with different techn
 -   COVID-19 Dashboard - a dashboard created to monitor the Coronavirus Pandemic. Created using Plotly, Dash, and Heroku. View the dashboard at [covid19-report.herokuapp.com](https://covid19-report.herokuapp.com)
 
     -   [covid-app](Projects/covid-app-nogit)
+-   Spotify Speech - A speech recognizer for Spotify commands [source code](https://github.com/CoderHahs/spotify-speech)
